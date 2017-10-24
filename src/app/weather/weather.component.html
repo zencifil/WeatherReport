@@ -1,3 +1,12 @@
-<p>
-  weather works!
-</p>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+      <h2>{{ weather.name }}</h2>
+      <p>
+        Temperature: {{ weather.main.temp - 273.15 }}<br/>
+        Wind: From {{ weather.wind.deg }} - {{ weather.wind.speed }} m/s<br/>
+      </p>
+    </div>
+  </div>
+</div>

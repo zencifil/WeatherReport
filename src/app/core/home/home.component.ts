@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WeatherStatic } from '../../weather/weather.static';
 
 @Component({
   selector: 'app-home',
