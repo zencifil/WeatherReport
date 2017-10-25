@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable, Input } from '@angular/core';
+import { Component, OnInit, Injectable, Input, ElementRef, ViewChild } from '@angular/core';
 
 import { WeatherObjectModel } from '../models/weather-object.model';
 import { Subscription } from 'rxjs/Subscription';
@@ -14,13 +14,16 @@ import { DataService } from '../shared/data.service';
 @Injectable()
 export class WeatherComponent implements OnInit {
   @Input() weather: WeatherObjectModel;
+  @ViewChild('city') city;
 
   subscription: Subscription;
 
-  constructor(private weatherService: WeatherService, private dataService: DataService) { }
+  constructor(private weatherService: WeatherService,
+    private dataService: DataService,
+    private cityInput: ElementRef) { }
 
   ngOnInit() {
-    this.dataService.getWeather('London');
+    this.dataService.getWeather(this.city.nativeElement.value);
     this.subscription = this.weatherService.weatherChanged
       .subscribe((weather: WeatherObjectModel) => {
         this.weather = weather;
@@ -29,6 +32,6 @@ export class WeatherComponent implements OnInit {
   }
 
   getWeather() {
-    this.dataService.getWeather('London');
+    this.dataService.getWeather(this.city.nativeElement.value);
   }
 }
