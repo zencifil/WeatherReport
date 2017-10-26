@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { WeatherStatic } from '../../weather/weather.static';
+import { DataService } from '../../shared/data.service';
 
 @Component({
   selector: 'app-home',
@@ -7,10 +9,12 @@ import { WeatherStatic } from '../../weather/weather.static';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  city: string;
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
+    this.city = this.dataService.getSelectedCity();
   }
 
 }

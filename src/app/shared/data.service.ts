@@ -9,18 +9,27 @@ import { WeatherService } from '../weather/weather.service';
 
 @Injectable()
 export class DataService {
+  selectedCity: string;
 
-    constructor(private httpClient: HttpClient,
-                private weatherService: WeatherService) {}
+  constructor(private httpClient: HttpClient,
+              private weatherService: WeatherService) {}
 
-    getWeather(city: string) {
-        this.httpClient.get<WeatherObjectModel>(WeatherStatic.WeatherDomain, {
-          observe: 'body',
-          params: new HttpParams().set('APPID', WeatherStatic.ApiKey).append('q', city)
-        }).map((weather) => {
-          return weather;
-        }).subscribe((weather) => {
-          this.weatherService.setWeatherObject(weather);
-        });
-      }
+  getWeather() {
+    this.httpClient.get<WeatherObjectModel>(WeatherStatic.WeatherDomain, {
+      observe: 'body',
+      params: new HttpParams().set('APPID', WeatherStatic.ApiKey).append('q', this.selectedCity)
+    }).map((weather) => {
+      return weather;
+    }).subscribe((weather) => {
+      this.weatherService.setWeatherObject(weather);
+    });
+  }
+
+  getSelectedCity(): string {
+    return this.selectedCity;
+  }
+
+  setSelectedCity(city: string) {
+    this.selectedCity = city;
+  }
 }

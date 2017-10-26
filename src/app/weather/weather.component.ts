@@ -14,16 +14,14 @@ import { DataService } from '../shared/data.service';
 @Injectable()
 export class WeatherComponent implements OnInit {
   @Input() weather: WeatherObjectModel;
-  @ViewChild('city') city;
+  @ViewChild('city') cityInput;
 
   subscription: Subscription;
 
-  constructor(private weatherService: WeatherService,
-    private dataService: DataService,
-    private cityInput: ElementRef) { }
+  constructor(private weatherService: WeatherService, private dataService: DataService) { }
 
   ngOnInit() {
-    this.dataService.getWeather(this.city.nativeElement.value);
+    this.dataService.getWeather();
     this.subscription = this.weatherService.weatherChanged
       .subscribe((weather: WeatherObjectModel) => {
         this.weather = weather;
@@ -32,6 +30,7 @@ export class WeatherComponent implements OnInit {
   }
 
   getWeather() {
-    this.dataService.getWeather(this.city.nativeElement.value);
+    this.dataService.setSelectedCity(this.cityInput.nativeElement.value);
+    this.dataService.getWeather();
   }
 }
